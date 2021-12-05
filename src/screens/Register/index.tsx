@@ -41,7 +41,6 @@ const schema = Yup.object().shape({
 })
 
 export function Register(){
-  const dataKey = '@gofinances:transactions';
   const navigation = useNavigation<NavigationProps>();
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -59,7 +58,7 @@ export function Register(){
     resolver: yupResolver(schema)
   });
 
-  function handleTransactionsTypesSelect(type: 'up' | 'down') {
+  function handleTransactionsTypesSelect(type: 'positive' | 'negative') {
     setTransactionType(type);
   }
 
@@ -82,12 +81,13 @@ export function Register(){
       id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date()
     }
 
     try {
+      const dataKey = '@gofinances:transactions';
       const dataStorage = await AsyncStorage.getItem(dataKey);
       const currentData = dataStorage ? JSON.parse(dataStorage) : [];
 
@@ -141,13 +141,13 @@ export function Register(){
               <TransactionTypeButton 
                 type="up" 
                 title="Income"
-                onPress={()=>handleTransactionsTypesSelect('up')}
+                onPress={()=>handleTransactionsTypesSelect('positive')}
                 isActive={transactionType === 'up'}
               />
               <TransactionTypeButton 
                 type="down" 
                 title="Outcome"
-                onPress={()=>handleTransactionsTypesSelect('down')}
+                onPress={()=>handleTransactionsTypesSelect('negative')}
                 isActive={transactionType === 'down'}
               />
             </TransactionsTypes>
