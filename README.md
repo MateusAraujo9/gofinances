@@ -1,2 +1,3 @@
 # gofinances
-Projeto desenvolvido durante o curso de React Native da Rocketseat
+
+Projeto desenvolvido durante o curso de React Native da Rocketseat.
